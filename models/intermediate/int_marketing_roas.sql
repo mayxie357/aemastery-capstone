@@ -14,8 +14,8 @@ select
     sum(cost_usd) as spend,
     sum(clicks) as clicks,
     sum(impressions) as impressions,
-    count(distinct orders.order_id) as total_orders,
-    sum(orders.order_total_usd) as total_order_revenue
+    count(distinct orders.order_id) as total_orders, --better to coalesce with 0
+    sum(orders.order_total_usd) as total_order_revenue --better to coalesce with 0
 from adspend
 left join orders
     on adspend.date = orders.order_date
