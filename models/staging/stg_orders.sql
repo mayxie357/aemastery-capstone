@@ -4,11 +4,6 @@ with raw_orders as (
     select * from {{ ref('raw_orders_batch1') }}
     union all
     select * from {{ ref('raw_orders_batch2') }} 
-), 
-
-raw_orders_dedup as (
-    select * from raw_orders
-    qualify row_number () over (partition by order_id order by updated_at desc) = 1
 ),
 
 orders_transformed as (
@@ -25,7 +20,7 @@ select
     {{ json_text('utm_json','medium') }} as utm_medium,
     {{ json_text('utm_json','campaign') }} as utm_campaign,
     updated_at
-from raw_orders_dedup
+from raw_orders
 ), 
 
 usd_exchange_rates as (
@@ -40,5 +35,5 @@ left join usd_exchange_rates
     on orders_transformed.order_date = usd_exchange_rates.date
     and orders_transformed.currency = usd_exchange_rates.currency
 {% if is_incremental() %}
-where unique_id not in (select unique_id from {{ this }})
+where updated_at > (select max(updated_at) from {{ this }})
 {% endif %}

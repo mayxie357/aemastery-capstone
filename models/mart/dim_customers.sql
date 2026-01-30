@@ -3,6 +3,7 @@
 WITH nested AS (
   SELECT *, SPLIT(TRIM(full_name), ' ') AS name_parts
   FROM {{ ref('stg_customers') }}
+  QUALIFY row_number () over (partition by customer_id order by updated_at_utc desc) = 1
 )
 
 select
