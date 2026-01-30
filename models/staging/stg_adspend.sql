@@ -25,5 +25,5 @@ from raw_adspend
 left join channel_mapping
     on trim(raw_adspend.channel) = trim(channel_mapping.raw_channel)
 {% if is_incremental() %}
-where unique_id not in (select unique_id from {{ this }})
+where date > (select max(date) from {{ this }})
 {% endif %}
