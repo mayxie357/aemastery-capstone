@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: stg_adspend
+    columns:
+      - name: unique_id
+        tests:
+          - unique
+          - not_null
