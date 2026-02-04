@@ -18,12 +18,13 @@ select
     channel_mapping.canonical_channel,
     channel_mapping.paid_flag,
     trim(campaign_id) as campaign_id,
-    impressions,
-    clicks,
-    {{ parse_money('cost_text') }} as cost_usd
+    sum(impressions) as impressions,
+    sum(clicks) as clicks,
+    sum({{ parse_money('cost_text') }}) as cost_usd
 from raw_adspend
 left join channel_mapping
     on trim(raw_adspend.channel) = trim(channel_mapping.raw_channel)
+group by all
 {% if is_incremental() %}
 where date > (select max(date) from {{ this }})
 {% endif %}
