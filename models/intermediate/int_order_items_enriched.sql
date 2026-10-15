@@ -1,16 +1,21 @@
 {{ config(schema="intermediate", tags=["intermediate"]) }}
 
 with order_items as (
-    select order_id, product_sku from {{ ref('stg_order_items') }}
+    select 
+        unique_id, 
+        order_id, 
+        product_sku
+    from {{ ref('stg_order_items') }}
     qualify row_number () over (partition by order_id, product_sku order by line_revenue desc) = 1
 ),
 
 orders as (
-    select * from {{ ref('stg_orders') }}
+    select * except (unique_id) from {{ ref('stg_orders') }}
     qualify row_number () over (partition by order_id order by updated_at desc) = 1
 )
 
 select
+    order_items.unique_id as unique_id,
     orders.*,
     order_items.product_sku as product_sku
 

@@ -27,6 +27,7 @@ orders as (
 )
 
 select
+    {{ dbt_utils.generate_surrogate_key(['date','campaign_id']) }} as unique_id,
     date,
     campaign_id as campaign,
     spend,

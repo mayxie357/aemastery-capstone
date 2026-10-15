@@ -1,6 +1,7 @@
 {{ config(schema="mart", tags=["mart"]) }}
 
 select
+    unique_id,
     order_id,
     product_sku,
     order_ts_utc,

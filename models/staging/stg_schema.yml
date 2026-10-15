@@ -7,3 +7,29 @@ models:
         tests:
           - unique
           - not_null
+  - name: stg_orders
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+      - name: customer_id
+        tests: 
+          - not_null 
+      - name: status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['paid', 'cancelled', 'fulfilled', 'refunded']
+  - name: stg_order_items
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+      - name: product_sku
+        tests: 
+          - not_null 
+  - name: stg_customers
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
