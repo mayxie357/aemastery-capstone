@@ -1,6 +1,7 @@
 {{ config(schema="mart", tags=["mart"]) }}
 
 select
+    unique_id,
     date,
     campaign,
     spend,
