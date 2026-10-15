@@ -8,8 +8,9 @@ The project involves four primary data sources, ads pend, orders, order items, a
 Data modeling is performed on **dbt Cloud**, and data outputs are stored on **Google BigQuery**. The final tables (mart tables) are presented on a **Google Studio** dashboard. <br/>
 Caveat: A free version of Google BigQuery is used in this project, so transformations, such as incremental materialization and snapshot, that involve DML queries (queries to update, insert, and delete data from big query tables) are performed in a suboptimal manner. The data lineage shows what is performed under **Actual** and what could be done under **Ideal**.<br/>
 
-Below is the data model diagram. <br/>
+## Architecture and Data Models 
+Below is the data lineage diagram. <br/>
 <br/>
 ![data_model_diagram](aemastery_capstone_erd.jpg)
 
-The project creates two fact tables that can be used for data analysis and for dashboard monitoring. See dashboard [here](https://lookerstudio.google.com/s/iqMdn-shzVg).
+The project creates three mart tables that can be used to answer the key business questions. It also includes a dashboard to visualize sales performance and marketing efficiency by segments and over time. See dashboard [here](https://lookerstudio.google.com/s/iqMdn-shzVg).
