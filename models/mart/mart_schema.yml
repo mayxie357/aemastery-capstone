@@ -2,18 +2,21 @@ version: 2
 
 models:
   - name: dim_customers
+    description: "Dimension table of customers. Unique id is customer_id." 
     columns:
       - name: customer_id
         tests:
           - unique
           - not_null
   - name: fct_marketing_roas
+    description: "Fact table that combines marketing spending and order data to understand investment ROI. Unique id is date + campaign."
     columns:
       - name: unique_id
         tests:
           - unique
           - not_null
   - name: fct_order_items_customers
+    description: "Fact table that includes order details. Unique id is order id and product sku."
     columns:
       - name: unique_id
         tests:
